@@ -1,0 +1,128 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Heladería API",
+    "description": "API para gestionar sabores y pedidos de una heladería",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/sabores": {
+      "get": {
+        "summary": "Obtener todos los sabores disponibles",
+        "responses": {
+          "200": {
+            "description": "Lista de sabores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Sabor"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Agregar un nuevo sabor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sabor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sabor creado"
+          }
+        }
+      }
+    },
+    "/pedidos": {
+      "get": {
+        "summary": "Obtener todos los pedidos realizados",
+        "responses": {
+          "200": {
+            "description": "Lista de pedidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pedido"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo pedido",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pedido"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pedido creado"
+          },
+          "400": {
+            "description": "Error en la solicitud"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Sabor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Chocolate"
+          }
+        }
+      },
+      "Pedido": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "sabores": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Sabor"
+            }
+          },
+          "cliente": {
+            "type": "string",
+            "example": "Juan Pérez"
+          }
+        }
+      }
+    }
+  }
+}
